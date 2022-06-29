@@ -1,0 +1,345 @@
+swagger: '2.0'
+info:
+  version: Swagger 2.0
+  title: XSDVsWSDL_REST
+host: "localhost:9102"
+schemes:
+  - http
+basePath: '/XSDVsWSDL/XSDVsWSDL_REST'
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+
+paths:
+  "/update_citizen":
+    post:
+      operationId: /update_citizen
+      tags:
+        - Update citizen
+      summary: Update citizen details
+      description: Update citizen details
+      consumes:
+        - application/json
+      produces:
+        - application/json
+
+      parameters:
+        - in: body
+          name: body
+          description: Request body for updating citizenship
+          required: true
+          schema:
+            "$ref": "#/definitions/UpdateCitizenReq"
+      responses:
+        '200':
+          description: Response body
+          schema:
+            $ref: "#/definitions/CanonicalResponse"    
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: "#/definitions/Error"
+        '403':
+          description: Forbidden
+          schema:
+            $ref: "#/definitions/Error"
+        '404':
+          description: Not Found
+          schema:
+            $ref: "#/definitions/Error"
+        '409':
+          description: Conflict
+          schema:
+            $ref: "#/definitions/Error"
+        '500' :
+          description: Internal Server Error
+          schema:
+            $ref: "#/definitions/Error"                
+      deprecated: false
+  
+  "/update_id":
+    post:
+      operationId: /update_id
+      tags:
+        - Update identification
+      summary: Update identification details
+      description: Update identification details
+      consumes:
+        - application/json
+      produces:
+        - application/json
+
+      parameters:
+        - in: body
+          name: body
+          description: Request body updating identification
+          required: true
+          schema:
+            "$ref": "#/definitions/UpdateIdReq"
+      responses:
+        '200':
+          description: Response body
+          schema:
+            $ref: "#/definitions/CanonicalResponse"    
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: "#/definitions/Error"
+        '403':
+          description: Forbidden
+          schema:
+            $ref: "#/definitions/Error"
+        '404':
+          description: Not Found
+          schema:
+            $ref: "#/definitions/Error"
+        '409':
+          description: Conflict
+          schema:
+            $ref: "#/definitions/Error"
+        '500' :
+          description: Internal Server Error
+          schema:
+            $ref: "#/definitions/Error"                
+      deprecated: false
+  
+  "/update_personal":
+    post:
+      operationId: /update_personal
+      tags:
+        - Update personal information
+      summary: Update personal information
+      description: Update personal information
+      consumes:
+        - application/json
+      produces:
+        - application/json
+
+      parameters:
+        - in: body
+          name: body
+          description: Request body updating personal info
+          required: true
+          schema:
+            $ref: "#/definitions/UpdatePersonalInfoReq"
+      responses:
+        '200':
+          description: Response body
+          schema:
+            $ref: "#/definitions/CanonicalResponse"    
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: "#/definitions/Error"
+        '403':
+          description: Forbidden
+          schema:
+            $ref: "#/definitions/Error"
+        '404':
+          description: Not Found
+          schema:
+            $ref: "#/definitions/Error"
+        '409':
+          description: Conflict
+          schema:
+            $ref: "#/definitions/Error"
+        '500' :
+          description: Internal Server Error
+          schema:
+            $ref: "#/definitions/Error"                
+      deprecated: false
+          
+definitions:
+  UpdateCitizenReq:
+    title: UpdateCitizenReq
+    type: object
+    properties:
+      common_fields:
+        $ref: "#/definitions/CommonFields"
+      basic:
+        $ref: "#/definitions/Basic"
+      citizen:
+        $ref: '#/definitions/Citizen'
+
+  UpdateIdReq:
+    title: UpdateCitizenReq
+    type: object
+    properties:
+      common_fields:
+        $ref: "#/definitions/CommonFields"
+      basic:
+        $ref: "#/definitions/Basic"
+      identity:
+        $ref: '#/definitions/Identity'
+      address:
+        $ref: '#/definitions/Address'
+
+  UpdatePersonalInfoReq:
+    title: UpdateCitizenReq
+    type: object
+    properties:
+      common_fields:
+        $ref: "#/definitions/CommonFields"
+      basic:
+        $ref: "#/definitions/Basic"
+      address:
+        $ref: '#/definitions/Address'
+      birth:
+        $ref: '#/definitions/Birth'
+      occupation:
+        $ref: '#/definitions/Occupation'
+
+  CommonFields:
+    title: CommonFields
+    type: object
+    properties:
+      created_on:
+        type: string
+        format: date
+      requester:
+        type: string
+      provider:
+        type: string
+        
+  Basic:
+    title: BasicInfo
+    type: object
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+      age:
+        type: integer
+        format: int32
+      gender:
+        type: string
+      language:
+        type: array
+        items:
+          type: string
+          
+  Citizen:
+    title: Country
+    type: object
+    properties:
+      citizenships:
+        type: object
+        properties:
+          citizenship:
+            type: array
+            items:
+              type: object
+              properties:
+                Ntlty:
+                  type: string
+                MnrInd:
+                  type: string
+  Address:
+    title: Address
+    type: array
+    items:
+      type: object
+      properties:
+        street:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+          
+  Identity:
+    title: Identity
+    type: object
+    properties:
+      identifications:
+        type: object
+        properties:
+          identification:
+            type: array
+            items:
+              type: object
+              properties:
+                Id:
+                  type: string
+                IdTp:
+                  type: string
+  Birth:
+    title: Birth
+    type: object
+    properties:
+      date:
+        type: string
+        format: date
+      country:
+        type: string
+      province:
+        type: string
+      city:
+        type: string
+        
+  Occupation:
+    title: Occupation
+    type: object
+    properties:
+      profession:
+        type: string
+      employingcompany:
+        type: string
+  
+  Error:
+    type: object
+    required:
+    - "statusCode"
+    - "statusMessage"
+    properties:
+      statusCode:
+        type: string
+        description: This is the ESF Canonical Error Code
+        example: '1000'
+      statusMessage:
+        type: string
+        description: More details and corrective actions related to the error which can be shown to a client
+      supportMessage:
+        type: string
+        description: Internal message meant for consumers of the API
+      transactionId:
+        type: string
+        description: This is the same transactionId that is sent in the request
+        example: 'cdfa7bc3-cbcd-473b-a743-4fc90dcc91e4'
+      timestamp:
+        type: string
+        format: date-time
+        description: Timestamp that the error occurred 
+        example: '2020-08-01T12:34'
+      path:
+        type: string
+        description: The path that caused the error
+        example: '/subscribers/27831234567'
+      method:
+        type: string
+        description: The HTTP method type that was used
+        example: 'GET'
+            
+  CanonicalResponse:
+    type: object
+    required:
+    - "statusCode"
+    - "statusMessage"
+    properties:      
+      statusCode:
+        type: string
+        description: This is the ESF Canonical Error Code
+        example: '1000'  
+      statusMessage:
+        type: string
+        description: More details and corrective actions related to the error which can be shown to a client    
+      transactionId:
+        type: string
+        description: This is the same transactionId that is sent in the request
+        example: 'cdfa7bc3-cbcd-473b-a743-4fc90dcc91e4'
+      id:
+        type: string
+        description: The id generated upon registration for notifications and to be used upon processing actual notifications
+        example: c5f80cb8-dc8b-11ea-87d0-0242ac130003
