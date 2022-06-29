@@ -342,4 +342,4 @@ definitions:
       id:
         type: string
         description: The id generated upon registration for notifications and to be used upon processing actual notifications
-        example: c5f80cb8-dc8b-11ea-87d0-0242ac130003
+        example: 'c5f80cb8-dc8b-11ea-87d0-0242ac130003'
